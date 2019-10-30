@@ -41,10 +41,8 @@ fn main() {
     let draw = unsafe { Vec::from_raw_parts(output as *mut MfxHdl, len, len) };
     for i in 0..len {
         let ptr: *mut Numbers = draw[i as usize] as *mut Numbers;
-        // this is fine, but not dropped
-        //let number = unsafe { &*ptr };
-        // this is dropped and crashes at first elements
-        let number = unsafe { Box::from_raw(ptr) };
+        let number = unsafe { &*ptr };
         dbg!(number);
     }
+    unsafe { Vec::from_raw_parts(draw[0] as *mut Numbers, len, len) };
 }
